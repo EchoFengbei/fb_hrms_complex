@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="fb_hrms_complex:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="fb_hrms_complex.war">
+      <element id="artifact" artifact-name="fb_hrms_complex:war exploded" />
+    </root>
+  </artifact>
+</component>
