@@ -19,7 +19,6 @@
 		<script type="text/javascript">
 		
 	    $(document).ready(function() {
-	        
 	        /** 表单提交的校验 */
 	        $("#btn").click(function(){
 	        	var title = $("#title").val(); 
@@ -35,7 +34,7 @@
 	        	
 	        	$("#documentForm").submit();
 	        	
-	        })
+	        });
 	    });
 			
 			
@@ -55,11 +54,10 @@
 		<table width="100%" height="90%" border="0" cellpadding="10" cellspacing="0" class="main_tabbor">
 		  	<tr valign="top">
 			    <td>
-			    
-				 <form id="documentForm" name="documentForm" action="${ctx }/document/addDocument" enctype="multipart/form-data" method="post">
+				 <form id="documentForm" name="documentForm" action="${ctx}/document/addDocument" enctype="multipart/form-data" method="post" >
                         <!-- 隐藏表单，flag表示添加标记 -->
     	 			<input type="hidden" name="flag" value="2">
-				  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
+				  	<table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
                         
 					    <tr><td class="font3 fftd">
 					              
@@ -74,20 +72,16 @@
 						</td></tr>
 						<tr><td class="main_tdbor"></td></tr>
 						
-							<tr><td class="font3 fftd">文档：<br/>
+					    <tr><td class="font3 fftd">文档：<br/>
 							<input type="file" name="file" id="file"  size="30"/>
 						</td></tr>
 						<tr><td class="main_tdbor"></td></tr>
-						
-                      
-						
+
 						<tr><td class="font3 fftd">
 								<input type="button" id="btn" value="上传">
 								<input type="reset" value="重置">
 						</td></tr>
 						<tr><td class="main_tdbor"></td></tr>
-					
-
 				  </table>
 				  </form>
 				</td>

@@ -7,7 +7,7 @@
 
   <!-- 启动页面 -->
   <welcome-file-list>
-    <welcome-file>/WEB-INF/jsp/dept/dept.jsp</welcome-file>
+    <welcome-file>/WEB-INF/jsp/main.jsp</welcome-file>
   </welcome-file-list>
 
   <!-- Bootstraps the root web application context before servlet initialization -->

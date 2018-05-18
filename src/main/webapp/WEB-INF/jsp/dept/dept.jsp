@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="f" %>
+<%@ taglib prefix="fkjava" uri="http://jsptags.com/tags/navigation/pager" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -109,31 +110,113 @@
 			  <td><input type="checkbox" name="checkAll" id="checkAll"></td>
 			  <td>部门名称</td>
 			  <td>详细信息</td>
-			  <td align="center">操作</td>
+				<td align="center">删除</td>
+			  <td align="center">更新</td>
 			</tr>
 			<c:forEach items="${requestScope.depts}" var="dept" varStatus="stat">
 				<tr id="data_${stat.index}" align="center" class="main_trbg" onMouseOver="move(this);" onMouseOut="out(this);">
 					<td><input type="checkbox" id="box_${stat.index}" value="${dept.id}"></td>
 					 <td>${dept.name }</td>
 					  <td>${dept.remark }</td>
+					<td align="center" width="40px;"><a href="${ctx}/dept/removeDeptSingle?id=${dept.id} " class="btu_removeDeptSingle" >
+						<img title="删除" src="${ctx}/images/update.gif" /></a>
+					</td>
 					 <td align="center" width="40px;"><a href="${ctx}/dept/updateDept?flag=1&id=${dept.id}">
-							<img title="修改" src="${ctx}/images/update.gif"/></a>
-					  </td>
+						 <img title="修改" src="${ctx}/images/update.gif"/></a>
+					 </td>
 				</tr>
 			</c:forEach>
 		  </table>
 		</td>
 	  </tr>
-	  <!-- 分页标签 -->
-	  <tr valign="top"><td align="center" class="font3">
-	  	 <fkjava:pager
-	  	        pageIndex="${pageIndex}"
-	  	        pageSize="${pageSize}"
-	  	        recordCount="${recordCount}"
-	  	        style="digg"
-	  	        submitUrl="${ctx}/dept/selectDept?pageIndex={0}"/>
-	  </td></tr>
+
+
+		<!-- 分页标签 -->
+		<tr valign="top"><td align="center" class="font3">
+				<div class="panel-body">
+					<nav >
+						<ul class="pagination">
+							<a href="/dept/selectDept?pageNo=1">首页</a>
+							<c:if test="${curPage==1}">
+									<a href="#" aria-label="Previous" class="prePage">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+							</c:if>
+							<c:if test="${curPage!=1}">
+									<a href="#" aria-label="Previous" class="prePage">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+							</c:if>
+
+							<c:forEach begin="1" end="${totalPages<5?totalPages:5}" step="1" var="itemPage">
+								<c:if test="${curPage == itemPage}">
+									<a href="/dept/selectDept?pageNo=${itemPage}">${itemPage}</a>
+								</c:if>
+								<c:if test="${curPage != itemPage}">
+									<a href="/dept/selectDept?pageNo=${itemPage}">${itemPage}</a>
+								</c:if>
+							</c:forEach>
+
+							<c:if test="${curPage==totalPages}">
+									<a href="#" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+							</c:if>
+							<c:if test="${curPage!=totalPages}">
+									<a href="#" aria-label="Next" class="nextPage">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+							</c:if>
+							<a href="/dept/selectDept?pageNo=${totalPages}">尾页</a>
+						</ul>
+					</nav>
+				</div>
+		</td></tr>
+
 	</table>
 	<div style="height:10px;"></div>
+
+	<script type="text/javascript">
+        $(function(){
+            //上一页
+            var curPage = ${curPage};
+            var totalPages = ${totalPages};
+            $(".prePage").click(function () {
+                if (curPage > 1){
+                    var pageNo = curPage-1;
+                    $(this).attr("href", "/dept/selectDept?pageNo="+pageNo);
+                }
+            });
+            //下一页
+            $(".nextPage").click(function () {
+                if (curPage < totalPages){
+                    var pageNo = curPage+1;
+                    $(this).attr("href", "/dept/selectDept?pageNo="+pageNo);
+                }
+            });
+
+            /*删除某一条数据*/
+            $(".btu_removeDeptSingle").click(function () {
+                var id = $(this).parent().parent().find("td:eq(0)").text();
+                var curPageNo = ${curPageNo};
+                if (confirm("确认删除信息吗？")){
+                    $.ajax({
+                        url:"/dept/removeDeptSingle/"+${dept.id},
+                        type:"DELETE",
+                        success:function (result) {
+                            if (result.code == 100){
+                                alert("删除成功！");
+                                window.location.href = "/dept/selectDept?pageNo="+curPageNo;
+                            }else {
+                                alert("error！！！");
+                            }
+                        }
+                    });
+                }
+            });
+
+
+		})
+	</script>
 </body>
 </html>

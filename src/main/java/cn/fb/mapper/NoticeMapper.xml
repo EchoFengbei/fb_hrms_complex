@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fb.mapper.NoticeMapper">
+    <select id="selectNoticeList" resultMap="noticeResult">
+        SELECT
+        *
+        FROM
+        notice_inf
+        LIMIT #{offset}, #{limit}
+    </select>
+    <select id="findNoticeById" resultMap="noticeResult">
+        SELECT
+        *
+        FROM
+        notice_inf
+        WHERE
+        id = #{id}
+    </select>
+    <insert id="addNotice" parameterType="cn.fb.pojo.Notice">
+        INSERT INTO
+        notice_inf
+        (title,content,user_id)
+        VALUES
+        (#{notice.title},#{notice.content},#{notice.user.id})
+    </insert>
+    <resultMap id="noticeResult" type="cn.fb.pojo.Notice">
+        <id column="id" property="id"></id>
+        <result column="title" property="title"></result>
+        <result column="content" property="content"></result>
+        <result column="create_date" property="createDate"></result>
+    </resultMap>
+</mapper>

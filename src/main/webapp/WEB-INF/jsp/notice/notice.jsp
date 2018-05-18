@@ -138,14 +138,14 @@
 					 <td>${notice.title }</td>
 					  <td>${notice.content }</td>
 					  <td>
-					  <f:formatDate value="${notice.createDate}" 
+					  <f:formatDate value="${notice.createDate}"
 								type="date" dateStyle="long"/>
 					  </td>
-					  <td>${notice.user.username }</td>
+					  <td>${notice.user.username}</td>
 					 <td align="center" width="40px;"><a href="${ctx }/notice/updateNotice?flag=1&id=${notice.id}">
 							<img title="修改" src="${ctx }/images/update.gif"/></a>
 					  </td>
-					  <td align="center"  width="40px;"><a href="#" id="prev_${notice.id }">
+					  <td align="center"  width="40px;"><a href="${ctx }/notice/previewNotice?id=${notice.id}">
 							<img title="预览" src="${ctx }/images/prev.gif"/></a>
 					  </td>
 				</tr>
@@ -154,15 +154,71 @@
 		</td>
 	  </tr>
 	  <!-- 分页标签 -->
-	  <tr valign="top"><td align="center" class="font3">
-	  	 <fkjava:pager
-	  	        pageIndex="${requestScope.pageModel.pageIndex}" 
-	  	        pageSize="${requestScope.pageModel.pageSize}" 
-	  	        recordCount="${requestScope.pageModel.recordCount}" 
-	  	        style="digg"
-	  	        submitUrl="${ctx}/employee/selectEmployee?pageIndex={0}"/>
-	  </td></tr>
+		<tr valign="top"><td align="center" class="font3">
+			<div class="panel-body">
+				<nav >
+					<ul class="pagination">
+						<a href="/notice/selectNotice?pageNo=1">首页</a>
+						<c:if test="${curPage==1}">
+							<a href="#" aria-label="Previous" class="prePage">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</c:if>
+						<c:if test="${curPage!=1}">
+							<a href="#" aria-label="Previous" class="prePage">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</c:if>
+
+						<c:forEach begin="1" end="${totalPages<5?totalPages:5}" step="1" var="itemPage">
+							<c:if test="${curPage == itemPage}">
+								<a href="/notice/selectNotice?pageNo=${itemPage}">${itemPage}</a>
+							</c:if>
+							<c:if test="${curPage != itemPage}">
+								<a href="/notice/selectNotice?pageNo=${itemPage}">${itemPage}</a>
+							</c:if>
+						</c:forEach>
+
+						<c:if test="${curPage==totalPages}">
+							<a href="#" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</c:if>
+						<c:if test="${curPage!=totalPages}">
+							<a href="#" aria-label="Next" class="nextPage">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</c:if>
+						<a href="/notice/selectNotice?pageNo=${totalPages}">尾页</a>
+					</ul>
+				</nav>
+			</div>
+		</td></tr>
+
 	</table>
 	<div style="height:10px;"></div>
+
+	<script type="text/javascript">
+        $(function(){
+            //上一页
+            var curPage = ${curPage};
+            var totalPages = ${totalPages};
+            $(".prePage").click(function () {
+                if (curPage > 1){
+                    var pageNo = curPage-1;
+                    $(this).attr("href", "/notice/selectNotice?pageNo="+pageNo);
+                }
+            });
+            //下一页
+            $(".nextPage").click(function () {
+                if (curPage < totalPages){
+                    var pageNo = curPage+1;
+                    $(this).attr("href", "/notice/selectNotice?pageNo="+pageNo);
+                }
+            });
+            /*删除某一条数据*/
+
+        })
+	</script>
 </body>
 </html>

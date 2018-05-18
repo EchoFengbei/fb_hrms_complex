@@ -148,19 +148,19 @@
 			<c:forEach items="${requestScope.documents}" var="document" varStatus="stat">
 				<tr ondblclick="down(${document.id});"  class="main_trbg" align="center" id="data_${stat.index}">
 					<td><input type="checkbox" id="box_${stat.index}" value="${document.id}"></td>
-					 <td>${document.title }</td>
+					 <td>${document.title}</td>
 					 <td>
 					  	<f:formatDate value="${document.createDate}" 
 								type="date" dateStyle="long"/>
 					  </td>
-					  <td>${document.user.username }</td>
+					  <td>${document.user.username}</td>
 					  <td>${document.remark }</td>
-					 <td align="center" width="40px;"><a href="${ctx }/document/updateDocument?flag=1&id=${document.id}">
-							<img title="修改" src="${ctx }/images/update.gif"/></a>
-					  </td>
-					  <td align="center"  width="40px;"><a href="#" id="down_${document.id }">
-							<img width="20" height="20" title="下载" src="${ctx }/images/downLoad.png"/></a>
-					  </td>
+					<td align="center" width="40px;"><a href="${ctx }/document/updateDocument?flag=1&id=${document.id}">
+						<img title="修改" src="${ctx }/images/update.gif"/></a>
+					</td>
+					<td align="center"  width="40px;"><a href="#" id="down_${document.id }">
+						<img width="20" height="20" title="下载" src="${ctx }/images/downLoad.png"/></a>
+					</td>
 				</tr>
 			</c:forEach>
 			 
@@ -169,16 +169,71 @@
 		</td>
 	  </tr>
 	  <!-- 分页标签 -->
-	  <tr valign="top"><td align="center" class="font3">
-	  	   <fkjava:pager 
-	  	      pageIndex="${pageModel.pageIndex}" 
-	  	      pageSize="${pageModel.pageSize}" 
-	  	      recordCount="${pageModel.recordCount}" 
-	  	      submitUrl="${ctx}/document/selectDocument.action?pageModel.pageIndex={0}&document.title=${document.title}"
-	  	      style="flickr"
-	  	      />
-	  </td></tr>
+		<tr valign="top"><td align="center" class="font3">
+			<div class="panel-body">
+				<nav >
+					<ul class="pagination">
+						<a href="/document/selectDocument?pageNo=1">首页</a>
+						<c:if test="${curPage==1}">
+							<a href="#" aria-label="Previous" class="prePage">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</c:if>
+						<c:if test="${curPage!=1}">
+							<a href="#" aria-label="Previous" class="prePage">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</c:if>
+
+						<c:forEach begin="1" end="${totalPages<5?totalPages:5}" step="1" var="itemPage">
+							<c:if test="${curPage == itemPage}">
+								<a href="/document/selectDocument?pageNo=${itemPage}">${itemPage}</a>
+							</c:if>
+							<c:if test="${curPage != itemPage}">
+								<a href="/document/selectDocument?pageNo=${itemPage}">${itemPage}</a>
+							</c:if>
+						</c:forEach>
+
+						<c:if test="${curPage==totalPages}">
+							<a href="#" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</c:if>
+						<c:if test="${curPage!=totalPages}">
+							<a href="#" aria-label="Next" class="nextPage">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</c:if>
+						<a href="/document/selectDocument?pageNo=${totalPages}">尾页</a>
+					</ul>
+				</nav>
+			</div>
+		</td></tr>
+
 	</table>
 	<div style="height:10px;"></div>
+	<script type="text/javascript">
+        $(function(){
+            //上一页
+            var curPage = ${curPage};
+            var totalPages = ${totalPages};
+            $(".prePage").click(function () {
+                if (curPage > 1){
+                    var pageNo = curPage-1;
+                    $(this).attr("href", "/document/selectDocument?pageNo="+pageNo);
+                }
+            });
+            //下一页
+            $(".nextPage").click(function () {
+                if (curPage < totalPages){
+                    var pageNo = curPage+1;
+                    $(this).attr("href", "/document/selectDocument?pageNo="+pageNo);
+                }
+            });
+
+            /*删除某一条数据*/
+
+        })
+	</script>
 </body>
 </html>

@@ -38,6 +38,7 @@
 					$.ligerDialog.error(msg);
 					return false;
 				}else{
+				    alert("添加成功！")
 					return true;
 				}
 				$("#deptForm").submit();

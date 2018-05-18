@@ -69,10 +69,10 @@
 		<table width="100%" height="90%" border="0" cellpadding="10" cellspacing="0" class="main_tabbor">
 		  	<tr valign="top">
 			    <td>
-			    <form id="noticeForm" name="noticeForm" action="${ctx }/notice/addNotice" method="post">
+			    <form id="noticeForm" name="noticeForm" action="${ctx}/notice/addNotice" method="post">
 				  <!-- 隐藏表单，flag表示添加标记 -->
     	 			<input type="hidden" name="flag" value="2">
-				  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
+				  	<table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 					    <tr><td class="font3 fftd">
 					                公告标题：<input type="text" name="title" size="30" id="title"/>
 					    	  <span style="color: #ff0000;"></span>

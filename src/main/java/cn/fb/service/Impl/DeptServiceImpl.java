@@ -22,4 +22,26 @@ public class DeptServiceImpl implements DeptService {
     public List<Dept> selectDeptList(Integer offset, Integer limit) {
         return deptMapper.selectDeptsByLimitAndOffset(offset,limit);
     }
+
+    @Override
+    public Dept selectDeptById(Integer id) {
+        return deptMapper.selectDeptById(id);
+    }
+
+    @Override
+    public int deleteDeptById(Integer id) {
+        return deptMapper.deleteDeptById(id);
+    }
+
+    /*插入*/
+    @Override
+    public void addDept(Dept dept) {
+        deptMapper.addDept(dept);
+    }
+
+    /*根据id更新整个dept信息*/
+    @Override
+    public int updateDeptById(Integer id,Dept dept) {
+        return deptMapper.updateDeptById(id,dept);
+    }
 }
